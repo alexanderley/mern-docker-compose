@@ -1,0 +1,36 @@
+version: "3.4"
+
+services:
+  # React client (frontend)
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    command: npm run dev
+    environment:
+      - NODE_ENV=production
+    # Optional: depends_on so Express starts after client
+    # depends_on:
+    #   - server
+    # Optional: restart policy
+    restart: unless-stopped
+
+  # Express server (backend)
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "5005:5005"
+    volumes:
+      - ./server:/app
+    command: npm run dev
+    environment:
+      - NODE_ENV=development
+    # Optional: environment variables
+    restart: unless-stopped
