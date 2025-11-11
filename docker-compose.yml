@@ -13,7 +13,7 @@ services:
       - /app/node_modules
     command: npm run dev
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
     # Optional: depends_on so Express starts after client
     # depends_on:
     #   - server
